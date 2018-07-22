@@ -1,5 +1,6 @@
 stages:
   - build
+  - deploy
 
 variables:
   BIN_NAME: ping-webhook-bot
@@ -35,6 +36,7 @@ deploy:
     - prod
   environment:
     name: prod
+  
   script:
     - echo "Job picked ip"
     - echo "Data" > /data.txt
