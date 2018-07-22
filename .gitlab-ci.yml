@@ -36,8 +36,11 @@ deploy:
     name: prod
   
   script:
-    - echo "Job picked ip"
-    - echo "Data" > /data.txt
+    - ls -a
+    - pwd
+    - sudo echo "Data" > /data.txt
+    - echo "Data" > /data2.txt
+    - echo "Rights checked, great"
 
   dependencies:
     - build
