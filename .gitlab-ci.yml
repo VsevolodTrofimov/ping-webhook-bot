@@ -18,7 +18,8 @@ build:
     
   script:
     - cd ${GOPATH}/src/${GO_PROJECT}
-    - go build -i -v
+    - go get ./...
+    - go builld -v -o ${BIN_NAME}
   artifacts:
     paths:
       - ${ARTIFACTS_DIR}
