@@ -1,0 +1,25 @@
+stages:
+  - build
+
+variables:
+  BIN_NAME: ping-webhook-bot
+  ARTIFACTS_DIR: artifacts
+  GO_PROJECT: gitlab.com/ping-webhook-bot
+
+before_script:
+  - mkdir -p ${GOPATH}/src/${GO_PROJECT}
+  - mkdir -p ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}
+  - go get github.com/tools/godep
+  - cp -r ${CI_PROJECT_DIR}/* ${GOPATH}/src/${GO_PROJECT}/
+  - cd ${GOPATH}/src/${GO_PROJECT}
+
+build_xenial:
+  stage: build
+  image: golang:1.9.5-xenial
+    
+  script:
+    - godep restore
+    - godep go build -o ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/${BIN_NAME}
+  artifacts:
+    paths:
+      - ${ARTIFACTS_DIR}
