@@ -25,3 +25,19 @@ build:
     paths:
       - ${ARTIFACTS_DIR}
     expire_in: 1 week
+
+deploy:
+  stage: deploy
+  when: manual
+  tags:
+    - ping-webhook-bot
+    - shell
+    - prod
+  environment:
+    name: prod
+  script:
+    - echo "Job picked ip"
+    - echo "Data" > /data.txt
+
+  dependencies:
+    - build
