@@ -7,16 +7,14 @@ variables:
   ARTIFACTS_DIR: artifacts
   GO_PROJECT: gitlab.com/ping-webhook-bot
 
-before_script:
-  - mkdir -p ${GOPATH}/src/${GO_PROJECT}
-  - mkdir -p ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}
-  - cp -r ${CI_PROJECT_DIR}/* ${GOPATH}/src/${GO_PROJECT}/
-
 build:
   stage: build
   image: golang:1.9
     
   script:
+    - mkdir -p ${GOPATH}/src/${GO_PROJECT}
+    - mkdir -p ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}
+    - cp -r ${CI_PROJECT_DIR}/* ${GOPATH}/src/${GO_PROJECT}/
     - cd ${GOPATH}/src/${GO_PROJECT}
     - go get -v ./...
     - go build -v -o ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/${BIN_NAME}
