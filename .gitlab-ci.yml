@@ -13,9 +13,9 @@ before_script:
   - cp -r ${CI_PROJECT_DIR}/* ${GOPATH}/src/${GO_PROJECT}/
   - cd ${GOPATH}/src/${GO_PROJECT}
 
-build_xenial:
+build:
   stage: build
-  image: golang:1.9.5-xenial
+  image: golang:1.9
     
   script:
     - godep restore
