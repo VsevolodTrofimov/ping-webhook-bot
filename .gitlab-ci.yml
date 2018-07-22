@@ -22,4 +22,4 @@ build:
     - go build -v -o ${ARTIFACTS_DIR}/${BIN_NAME}
   artifacts:
     paths:
-      - ${ARTIFACTS_DIR}
+      - ${GOPATH}/src/${GO_PROJECT}/${ARTIFACTS_DIR}
