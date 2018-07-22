@@ -17,7 +17,8 @@ build:
   image: golang:1.9
     
   script:
-    - go build -i -v ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/${BIN_NAME}
+    - cd ${GOPATH}/src/${GO_PROJECT}
+    - go build -i -v
   artifacts:
     paths:
       - ${ARTIFACTS_DIR}
