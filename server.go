@@ -52,7 +52,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 // Server is http reciever for the incoming pings
 func Server(c chan Ping) {
-	fmt.Println("Server starting")
+	fmt.Println("[Server] starting")
 
 	db := DBConnect()
 
@@ -62,6 +62,6 @@ func Server(c chan Ping) {
 
 	http.Handle("/", r)
 
-	fmt.Println("Server Running")
+	fmt.Println("[Server] Running")
 	log.Fatal(http.ListenAndServe(":8080", nil)) // WTF
 }

@@ -1,14 +1,14 @@
 package main
 
 import (
-	"runtime"
+	// "runtime"
 	"time"
 )
 
 const vtid = 150585302
 
 func main() {
-	runtime.GOMAXPROCS(8)
+	// runtime.GOMAXPROCS(8)
 
 	pingsCh := make(chan Ping, 10)
 
