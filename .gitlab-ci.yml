@@ -16,8 +16,9 @@ build:
   image: golang:1.9
     
   script:
-    - go get -v ${GOPATH}/src/${GO_PROJECT}/...
-    - go build -v -o ${ARTIFACTS_DIR}/${BIN_NAME} ${GO_PROJECT}
+    - cd ${GOPATH}/src/${GO_PROJECT}
+    - go get -v ./...
+    - go build -v -o ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/${BIN_NAME}
   
   artifacts:
     name: ${BIN_NAME}-build
