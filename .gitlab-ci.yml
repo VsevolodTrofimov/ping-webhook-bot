@@ -19,7 +19,7 @@ build:
     - go get -v ${GOPATH}/src/${GO_PROJECT}/...
     - go build -v -o ${ARTIFACTS_DIR}/${BIN_NAME} ${GO_PROJECT}
   
-    artifacts:
+  artifacts:
     name: ${BIN_NAME}-build
     paths:
       - ${ARTIFACTS_DIR}
