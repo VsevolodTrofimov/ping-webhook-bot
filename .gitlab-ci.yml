@@ -8,8 +8,7 @@ variables:
 
 before_script:
   - mkdir -p ${GOPATH}/src/${GO_PROJECT}
-  - mkdir -p ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}
-  - go get github.com/tools/godep
+  - mkdir -p ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}07:57 PM
   - cp -r ${CI_PROJECT_DIR}/* ${GOPATH}/src/${GO_PROJECT}/
   - cd ${GOPATH}/src/${GO_PROJECT}
 
@@ -18,8 +17,7 @@ build:
   image: golang:1.9
     
   script:
-    - godep restore
-    - godep go build -o ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/${BIN_NAME}
+    - go build -i -v ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/${BIN_NAME}
   artifacts:
     paths:
       - ${ARTIFACTS_DIR}
