@@ -36,11 +36,9 @@ deploy:
     name: prod
   
   script:
-    - ls -a
-    - pwd
-    - sudo echo "Data" > /data.txt
-    - echo "Data" > /data2.txt
-    - echo "Rights checked, great"
+    - cd artifacts
+    - ls -la
+    - sudo mv ./ping-webhook-bot /proj/ping-webhook-bot/ping-webhook-bot
 
   dependencies:
     - build
