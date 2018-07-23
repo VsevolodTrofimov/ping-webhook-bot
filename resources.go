@@ -11,7 +11,7 @@ const projectsInRow = 3
 
 // Pre and post stand for 1s project creation here
 const messageWelcomePre = "" +
-	"Hi, I'm a bot that recives your messages via simple webhook" +
+	"Hi, I'm a bot that recives your messages via simple webhook " +
 	"and sends them here."
 
 //
@@ -49,5 +49,5 @@ const messageHelp = "" +
 	"Known types are done, info, warn, err"
 
 const messageNoIntent = "" +
-	"Sorry, I have no idea what this was about." +
+	"Sorry, I have no idea what this was about. " +
 	"Use some command to get me back on the track"
