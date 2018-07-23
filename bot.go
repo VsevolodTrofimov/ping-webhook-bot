@@ -128,7 +128,7 @@ func Bot(c chan Ping) {
 
 				switch intent.Kind {
 				case IntentRenameChooseProjest:
-					fmt.Println("Chosen for rename", text)
+					fmt.Println("[Bot] Chosen for rename", text)
 					var project Project
 
 					err := db.Where(
@@ -138,7 +138,7 @@ func Bot(c chan Ping) {
 					).RecordNotFound()
 
 					if err {
-						fmt.Println("ERROR finding project", err, text)
+						fmt.Println("[Bot] ERROR finding project", err, text)
 						message := fmt.Sprintf(templateNotFound, text)
 						bot.Send(tgbotapi.NewMessage(user, message))
 						continue
@@ -152,12 +152,13 @@ func Bot(c chan Ping) {
 					tgMessage := tgbotapi.NewMessage(user, messageRenameNewName)
 					tgMessage.ReplyMarkup = tgbotapi.NewRemoveKeyboard(true)
 					bot.Send(tgMessage)
-					fmt.Println("Ready to rename", project)
+					fmt.Println("[Bot] Ready to rename", project)
 
 				case IntentRenameNewName:
-					fmt.Println("Applying rename for uuid", intent.Payload)
+					uuid := intent.Payload
+					fmt.Println("Applying rename for uuid", uuid)
 					var project Project
-					db.First(&project, "uuid = ?", intent.Payload)
+					db.First(&project, "uuid = ?", uuid)
 					oldName := project.Name
 
 					project.Name = text
@@ -170,10 +171,10 @@ func Bot(c chan Ping) {
 						project.Name,
 					)
 					bot.Send(tgbotapi.NewMessage(user, message))
-					fmt.Println("Applied rename")
+					fmt.Println("[Bot] Applied rename", uuid)
 
 				case IntentDelete:
-					fmt.Println("Chosen for deletion", text)
+					fmt.Println("[Bot] Chosen for deletion", text)
 					var project Project
 
 					err := db.Delete(
@@ -182,7 +183,7 @@ func Bot(c chan Ping) {
 					).RecordNotFound()
 
 					if err {
-						fmt.Println("ERROR finding project", err, text)
+						fmt.Println("[Bot] ERROR finding project", err, text)
 						message := fmt.Sprintf(templateNotFound, text)
 						bot.Send(tgbotapi.NewMessage(user, message))
 						continue
@@ -197,7 +198,7 @@ func Bot(c chan Ping) {
 					fmt.Println("Deleted")
 
 				default:
-					fmt.Println("No idea what this was about:", text)
+					fmt.Println("[Bot] No idea what this was about:", text)
 					bot.Send(tgbotapi.NewMessage(user, messageNoIntent))
 					continue
 				}
@@ -216,6 +217,8 @@ func makeCreateProject(bot *tgbotapi.BotAPI, db *gorm.DB) func(user int64, name 
 			name = uuid
 		}
 
+		fmt.Println("[Bot] Creating new project", uuid)
+
 		proj := Project{
 			User: user,
 			Name: name,
@@ -231,5 +234,7 @@ func makeCreateProject(bot *tgbotapi.BotAPI, db *gorm.DB) func(user int64, name 
 		tgMessage := tgbotapi.NewMessage(user, message)
 		tgMessage.ParseMode = tgbotapi.ModeMarkdown
 		bot.Send(tgMessage)
+
+		fmt.Println("[Bot] Created new project", uuid)
 	}
 }
