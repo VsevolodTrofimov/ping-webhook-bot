@@ -39,6 +39,7 @@ deploy:
     - cd artifacts
     - ls -la
     - sudo mv ./ping-webhook-bot /proj/ping-webhook-bot/ping-webhook-bot
+    - sudo systemctl restart pwh-bot
 
   dependencies:
     - build
