@@ -6,6 +6,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -62,6 +63,8 @@ func Server(c chan Ping) {
 
 	http.Handle("/", r)
 
+	port := ":" + strconv.Itoa(getConf().Port)
+	fmt.Println("[Server] using port", port)
 	fmt.Println("[Server] Running")
-	log.Fatal(http.ListenAndServe(":8080", nil)) // WTF
+	log.Fatal(http.ListenAndServe(port, nil)) // WTF
 }
