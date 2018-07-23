@@ -68,9 +68,6 @@ func Bot(c chan Ping) {
 			switch command {
 			case "new":
 				name := update.Message.CommandArguments()
-				if name == "" {
-					name = ""
-				}
 				createProject(user, name)
 
 			case "start":

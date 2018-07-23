@@ -28,7 +28,7 @@ const templateDeleteDone = "Deleted %s"
 
 // proj.Name, proj.UUID
 const templateCreated = "" +
-	"New project *%s* was created. Try using wh.v-trof.ru/%s?m=bot_works&t=done"
+	"New project *%s* was created. Try using wh.v-trof.ru/%s?m=Test&t=done"
 
 const messageRenameChoose = "Choose a project to rename"
 const messageRenameNewName = "Input new name for the project"
