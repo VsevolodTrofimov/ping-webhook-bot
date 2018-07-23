@@ -5,7 +5,6 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/teris-io/shortid"
 	"gopkg.in/telegram-bot-api.v4"
-	"io/ioutil"
 	"time"
 )
 
@@ -17,12 +16,12 @@ func Bot(c chan Ping) {
 	// init
 	fmt.Println("[Bot] Starting")
 
-	token := getToken()
+	token := getConf().Token
 	fmt.Println("[Bot] Using token", token)
 
 	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
-		fmt.Println("[Bot] ERROR in init", err)
+		fmt.Println("[Bot] ERROR in init:", err)
 		panic(err)
 	}
 
@@ -233,12 +232,4 @@ func makeCreateProject(bot *tgbotapi.BotAPI, db *gorm.DB) func(user int64, name 
 		tgMessage.ParseMode = tgbotapi.ModeMarkdown
 		bot.Send(tgMessage)
 	}
-}
-
-func getToken() string {
-	file, err := ioutil.ReadFile("token.txt")
-	if err != nil {
-		panic(err)
-	}
-	return string(file)
 }

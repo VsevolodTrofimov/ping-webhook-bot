@@ -1,9 +1,11 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	"gopkg.in/telegram-bot-api.v4"
+	"io/ioutil"
 	"strings"
 )
 
@@ -51,4 +53,25 @@ func createProjectButtons(db *gorm.DB, user int64) [][]tgbotapi.KeyboardButton {
 	}
 
 	return buttons
+}
+
+type config struct {
+	Port  int    `json:"port"`
+	Token string `json:"token"`
+}
+
+var conf config
+
+func getConf() config {
+	if conf.Token == "" {
+		file, err := ioutil.ReadFile("./config.json")
+		if err != nil {
+			fmt.Println("[Config] error reading config file:", err)
+			panic(err)
+		}
+
+		json.Unmarshal(file, &conf)
+	}
+
+	return conf
 }

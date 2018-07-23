@@ -6,3 +6,7 @@
 token\.txt
 
 debug
+
+\.vscode/
+
+config\.json

@@ -1,21 +1,20 @@
 stages:
   - build
+  - deploy
 
 variables:
   BIN_NAME: ping-webhook-bot
   ARTIFACTS_DIR: artifacts
   GO_PROJECT: gitlab.com/ping-webhook-bot
 
-before_script:
-  - mkdir -p ${GOPATH}/src/${GO_PROJECT}
-  - mkdir -p ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}
-  - cp -r ${CI_PROJECT_DIR}/* ${GOPATH}/src/${GO_PROJECT}/
-
 build:
   stage: build
   image: golang:1.9
     
   script:
+    - mkdir -p ${GOPATH}/src/${GO_PROJECT}
+    - mkdir -p ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}
+    - cp -r ${CI_PROJECT_DIR}/* ${GOPATH}/src/${GO_PROJECT}/
     - cd ${GOPATH}/src/${GO_PROJECT}
     - go get -v ./...
     - go build -v -o ${CI_PROJECT_DIR}/${ARTIFACTS_DIR}/${BIN_NAME}
@@ -25,3 +24,22 @@ build:
     paths:
       - ${ARTIFACTS_DIR}
     expire_in: 1 week
+
+deploy:
+  stage: deploy
+  when: manual
+  tags:
+    - ping-webhook-bot
+    - shell
+    - prod
+  environment:
+    name: prod
+  
+  script:
+    - cd artifacts
+    - ls -la
+    - sudo mv ./ping-webhook-bot /proj/ping-webhook-bot/ping-webhook-bot
+    - sudo systemctl restart pwh-bot
+
+  dependencies:
+    - build
